@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Menu.css";
+import { Link as LinkScroll, Element } from "react-scroll";
+
 function Menu() {
-  const [popularMenuItems, setMenuItems] = useState({
+  const [menuSearchInputValue, setMenuSearchInputValue] = useState("");
+  const [menuItems, setMenuItems] = useState({
+    favorites: [],
     burgers: [],
     sides: [],
     drinks: [],
@@ -9,16 +13,55 @@ function Menu() {
   });
 
   useEffect(() => {
+    const searchText = menuSearchInputValue.toLowerCase();
+
     fetch("http://localhost:3001/menu")
       .then((response) => response.json())
       .then((data) => {
         if (data) {
           const { burgers, sides, desserts, drinks } = data;
+
+          // Filter menu items based on searchText
+          const filteredBurgers = burgers.filter(
+            (item) =>
+              item.title.toLowerCase().includes(searchText) ||
+              item.category.toLowerCase().includes(searchText)
+          );
+          const filteredSides = sides.filter(
+            (item) =>
+              item.title.toLowerCase().includes(searchText) ||
+              item.category.toLowerCase().includes(searchText)
+          );
+          const filteredDrinks = drinks.filter(
+            (item) =>
+              item.title.toLowerCase().includes(searchText) ||
+              item.category.toLowerCase().includes(searchText)
+          );
+          const filteredDesserts = desserts.filter(
+            (item) =>
+              item.title.toLowerCase().includes(searchText) ||
+              item.category.toLowerCase().includes(searchText)
+          );
+
+          const filteredFavorites = [
+            ...filteredBurgers,
+            ...filteredSides,
+            ...filteredDrinks,
+            ...filteredDesserts,
+          ].filter((item) => {
+            return (
+              item.userFavorited.includes(window.currentUser) &&
+              window.currentUser
+            );
+          });
+          console.log(filteredFavorites);
+
           setMenuItems({
-            burgers: burgers,
-            sides: sides,
-            drinks: drinks,
-            desserts: desserts,
+            favorites: filteredFavorites,
+            burgers: filteredBurgers,
+            sides: filteredSides,
+            drinks: filteredDrinks,
+            desserts: filteredDesserts,
           });
         } else {
           console.error("Invalid menu data format:", data);
@@ -27,51 +70,121 @@ function Menu() {
       .catch((error) => {
         console.error("Error fetching menu data:", error);
       });
-  }, []);
+  }, [menuSearchInputValue]);
 
   function getRandomAngle() {
     return Math.floor(Math.random() * 20) - 10;
   }
 
+  const handleSearchInputChange = (event) => {
+    setMenuSearchInputValue(event.target.value);
+  };
   return (
     <>
       <div className="under-navbar"></div>
-      <div className="circle circle1"></div>
-      <div className="circle circle2"></div>
-      <div className="circle circle3"></div>
-      <div className="circle circle4"></div>
-      <div className="circle circle5"></div>
       <div className="menu-page">
         <div className="menu-content">
           <div className="menu-navbar">
             <div className="menu-navbar-categories">
-              <p className="navbar-category">Burgers</p>
-              <p className="navbar-category">Sides</p>
-              <p className="navbar-category">Drinks</p>
-              <p className="navbar-category">Desserts</p>
+              <LinkScroll
+                to="burgers"
+                smooth={true}
+                duration={500}
+                activeClass="active-category"
+                spy={true}
+                offset={-140}
+                className="navbar-category"
+              >
+                Burgers
+              </LinkScroll>
+              <LinkScroll
+                to="sides"
+                smooth={true}
+                duration={500}
+                activeClass="active-category"
+                spy={true}
+                offset={-140}
+                className="navbar-category"
+              >
+                Sides
+              </LinkScroll>
+              <LinkScroll
+                to="drinks"
+                smooth={true}
+                duration={500}
+                activeClass="active-category"
+                spy={true}
+                offset={-140}
+                className="navbar-category"
+              >
+                Drinks
+              </LinkScroll>
+              <LinkScroll
+                to="desserts"
+                smooth={true}
+                duration={500}
+                activeClass="active-category"
+                spy={true}
+                offset={-140}
+                className="navbar-category"
+              >
+                Desserts
+              </LinkScroll>
             </div>
             <div className="menu-navbar-search">
               <label className="xxlg-text">Search: </label>
-              <input type="text" id="menu-search-input"></input>
+              <input
+                type="text"
+                id="menu-search-input"
+                value={menuSearchInputValue}
+                onChange={handleSearchInputChange}
+              ></input>
             </div>
           </div>
           <div className="menu">
             <div className="menu-favorites">
               <h1>Favorites</h1>
               <div className="category-box">
-                {/* {popularMenuItems.favorites.map((fav, index) => (
-                  <img
-                    key={index}
-                    src={fav.image}
-                    alt={`Favorite item: ${index}`}
-                  />
-                ))} */}
+                {menuItems.favorites.length == 0 ? (
+                  <p className="favorite-info">
+                    It doesn't look like you have any favorite items yet <br />
+                    Add the most tasty items on the menu below by clicking the
+                    star!
+                  </p>
+                ) : (
+                  menuItems.favorites.map((favorite, index) => (
+                    <div key={index} className="menu-item">
+                      <div className="item-info">
+                        <h1>{favorite.title}</h1>
+                        <h2>{favorite.price} $</h2>
+                        <p>{favorite.description}</p>
+                        <button className="btn btn-success btn-add-order">
+                          Add to order
+                        </button>
+                      </div>
+                      <div className="item-image">
+                        <img
+                          src={favorite.image}
+                          alt={`Favorite: ${index}`}
+                          style={{
+                            transform: `rotate(${getRandomAngle()}deg)`,
+                          }}
+                        />
+                        <div className="image-button">
+                          <button className="btn btn-success">
+                            Add to order
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
-            <div className="menu-burgers">
+            <Element name="burgers" className="menu-burgers">
               <h1>Burgers</h1>
               <div className="category-box">
-                {popularMenuItems.burgers.map((burger, index) => (
+                {menuItems.burgers.map((burger, index) => (
                   <div key={index} className="menu-item">
                     <div className="item-info">
                       <h1>{burger.title}</h1>
@@ -96,11 +209,11 @@ function Menu() {
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="menu-sides">
+            </Element>
+            <Element name="sides" className="menu-sides">
               <h1>Sides</h1>
               <div className="category-box">
-                {popularMenuItems.sides.map((side, index) => (
+                {menuItems.sides.map((side, index) => (
                   <div key={index} className="menu-item">
                     <div className="item-info">
                       <h1>{side.title}</h1>
@@ -125,11 +238,11 @@ function Menu() {
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="menu-drinks">
+            </Element>
+            <Element name="drinks" className="menu-drinks">
               <h1>Drinks</h1>
               <div className="category-box">
-                {popularMenuItems.drinks.map((drink, index) => (
+                {menuItems.drinks.map((drink, index) => (
                   <div key={index} className="menu-item">
                     <div className="item-info">
                       <h1>{drink.title}</h1>
@@ -154,11 +267,11 @@ function Menu() {
                   </div>
                 ))}
               </div>
-            </div>
-            <div className="menu-desserts">
+            </Element>
+            <Element name="desserts" className="menu-desserts">
               <h1>Desserts</h1>
               <div className="category-box">
-                {popularMenuItems.desserts.map((dessert, index) => (
+                {menuItems.desserts.map((dessert, index) => (
                   <div key={index} className="menu-item">
                     <div className="item-info">
                       <h1>{dessert.title}</h1>
@@ -183,7 +296,7 @@ function Menu() {
                   </div>
                 ))}
               </div>
-            </div>
+            </Element>
           </div>
         </div>
       </div>

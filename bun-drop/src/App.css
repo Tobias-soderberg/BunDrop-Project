@@ -24,7 +24,7 @@ body {
   background-color: rgba(23, 98, 167, 0.1);
   width: 40vh;
   height: 40vh;
-  top: 12vh;
+  top: 5vh;
   left: 10vh;
 }
 
@@ -32,7 +32,7 @@ body {
   background-color: rgba(255, 160, 122, 0.1);
   width: 50vh;
   height: 50vh;
-  top: -15vh;
+  top: -20vh;
   left: 85vh;
 }
 
@@ -56,10 +56,14 @@ body {
   background-color: rgba(23, 98, 167, 0.1);
   width: 20vh;
   height: 20vh;
-  top: 85vh;
+  top: 77vh;
   left: 40vh;
 }
 
 .z-index-increase {
-  z-index: 2;
+  z-index: 1;
+}
+
+.warning-text {
+  color: crimson;
 }

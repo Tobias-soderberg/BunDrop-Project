@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Login.css";
 
 const Login = ({ isOpen, onClose }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -23,10 +24,14 @@ const Login = ({ isOpen, onClose }) => {
         window.currentUser = user.id;
         console.log("User logged in: ", user.id);
         handleClose();
-        navigate("/");
+        handleRefresh();
       } else {
         console.error("Invalid username or password");
-        navigate("/registration");
+        window.currentUser = -1;
+        navigate("/register");
+        if (location.pathname === "/register") {
+          handleRefresh();
+        }
         handleClose();
       }
     } catch (error) {
@@ -38,6 +43,10 @@ const Login = ({ isOpen, onClose }) => {
     onClose();
     setUsername("");
     setPassword("");
+  };
+
+  const handleRefresh = () => {
+    navigate(location.pathname, { replace: true });
   };
 
   if (!isOpen) return null;

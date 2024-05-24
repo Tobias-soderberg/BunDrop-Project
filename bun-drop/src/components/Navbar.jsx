@@ -1,19 +1,25 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import Login from "./Login";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   function toggleMenu() {
     setMenuOpen(!menuOpen);
   }
 
   function toggleLogin() {
-    setIsLoginOpen(!isLoginOpen);
+    if (location.pathname !== "/register") {
+      setIsLoginOpen(!isLoginOpen);
+    } else {
+      navigate("/register");
+    }
   }
 
   //Given dropdown menu exist and I click on page that is not the menu then I will remove it.
@@ -21,6 +27,10 @@ function Navbar() {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setMenuOpen(false);
     }
+  }
+
+  function handleLogout() {
+    window.currentUser = undefined;
   }
 
   //Add eventlistener on load, removes when component is no longer there... Maybe I will change this later?
@@ -59,12 +69,23 @@ function Navbar() {
                     <i className="fa-solid fa-cart-shopping"></i> Shopping Cart
                   </p>
                 </Link>
-
-                <Link to="register" className="dropdown-item">
-                  <p>
-                    <i className="fa-solid fa-user"></i> Register account
-                  </p>
-                </Link>
+                {!window.currentUser ? (
+                  <Link to="register" className="dropdown-item">
+                    <p>
+                      <i className="fa-solid fa-user"></i> Register account
+                    </p>
+                  </Link>
+                ) : (
+                  <Link
+                    to="register"
+                    className="dropdown-item"
+                    onClick={handleLogout}
+                  >
+                    <p>
+                      <i className="fa-solid fa-user"></i> Logout account
+                    </p>
+                  </Link>
+                )}
               </div>
             )}
           </div>

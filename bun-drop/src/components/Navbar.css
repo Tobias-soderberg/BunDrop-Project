@@ -66,6 +66,11 @@
   white-space: nowrap;
   border-top: 2px solid black;
 }
+.dropdown-item > p {
+  margin: 0px;
+  padding: 2vh;
+  text-align: center;
+}
 
 .dropdown-menu > .dropdown-item:last-child {
   border-bottom: 2px solid black;

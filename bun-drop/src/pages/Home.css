@@ -1,6 +1,11 @@
 .flex-container {
   display: flex;
   height: 100vh;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #2f303a;
+  color: white;
 }
 
 .left-container,
@@ -12,30 +17,60 @@
   align-items: center;
 }
 
-.left-container .top-content {
-  margin-bottom: 20px;
-}
-
-.left-container .top-image {
-  max-width: 100%;
-}
-
-/* Carousel specific styles */
-.right-container {
-  width: 100%;
-  max-width: 800px; /* Set a maximum width for the carousel */
-  margin: 0 auto; /* Center the carousel horizontally */
-}
-
-.carousel-item {
+.top-content,
+.bottom-content {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.bottom-content > h1 {
+  font-size: 64px;
+}
+.bottom-content > h3 {
+  font-size: 26px;
+}
+
+.btn-start-order {
+  margin-top: 5vh;
+  width: 100%;
+  height: 6vh;
+  font-size: x-large;
+}
+
+.top-image {
+  max-width: 65%;
+}
+
+.right-container {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.left-container {
+  height: 100%;
+  justify-content: center;
+}
+.carousel,
+.carousel-inner,
+.carousel-item,
 .carousel-image {
-  width: 100%; /* Ensure images take up full width of the slide */
-  height: auto; /* Preserve aspect ratio */
-  max-height: 100vh; /* Ensure images do not exceed viewport height */
-  object-fit: cover; /* Maintain aspect ratio and fill container */
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+}
+
+.carousel-image {
+  object-fit: cover;
+}
+
+.carousel-wrapper {
+  height: 50%;
+  width: 50%;
+  background-color: black;
+  border: 10px solid black;
+  border-radius: 25px;
 }

@@ -42,7 +42,6 @@ function Navbar() {
             </button>
             {menuOpen && (
               <div className="dropdown-menu">
-                {/* Customizable menu content goes here */}
                 <Link to="/" className="dropdown-item">
                   <p>
                     <i className="fa-solid fa-house"></i> Home page
@@ -73,7 +72,7 @@ function Navbar() {
         <div className="navbar-middle">
           <Link to="/" className="menu-button">
             <img src="src\assets\img\logo color.png" className="logo" />
-            <span className="xxlg-text">BUN DROP</span>
+            <span className="xxlg-text nav-title-text">BUN DROP</span>
           </Link>
         </div>
         <div className="navbar-right">
@@ -87,20 +86,7 @@ function Navbar() {
       </div>
 
       {/* Opens when you click on login button */}
-      <Login isOpen={isLoginOpen} onClose={toggleLogin}>
-        <h2>Login</h2>
-        <form>
-          <div>
-            <label>Email:</label>
-            <input type="text" name="email" />
-          </div>
-          <div>
-            <label>Password:</label>
-            <input type="password" name="password" />
-          </div>
-          <button type="submit">Login</button>
-        </form>
-      </Login>
+      <Login isOpen={isLoginOpen} onClose={toggleLogin}></Login>
     </>
   );
 }

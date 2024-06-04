@@ -9,6 +9,8 @@ function Register() {
     password: "",
     confirmPassword: "",
   });
+  const [loginTries, setLoginTries] = useState(0);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -65,6 +67,7 @@ function Register() {
           navigate("/");
         } else {
           console.error("Invalid username or password");
+          setLoginTries(loginTries + 1);
           localStorage.setItem("currentUser", JSON.stringify(null));
           navigate("/register");
           if (location.pathname === "/register") {
@@ -90,9 +93,10 @@ function Register() {
       <div className="under-navbar"></div>
       <div className="registration-page">
         <div className="form-content z-index-increase">
-          {JSON.parse(localStorage.getItem("currentUser")) == null && (
-            <p className="warning-text">Login failed, please try again!</p>
-          )}
+          {JSON.parse(localStorage.getItem("currentUser")) == null &&
+            loginTries > 0 && (
+              <p className="warning-text">Login failed, please try again!</p>
+            )}
           <form onSubmit={handleSubmit}>
             {registration ? <h2>Registration</h2> : <h2>Login</h2>}
             <div className="registration-input-field">

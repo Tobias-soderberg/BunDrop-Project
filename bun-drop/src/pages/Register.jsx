@@ -28,7 +28,7 @@ function Register() {
         alert("Passwords do not match!");
         return;
       }
-      const user = { username, password };
+      const user = { username, password, favoriteItems: [] };
 
       try {
         const response = await fetch("http://localhost:3001/users", {
@@ -42,7 +42,7 @@ function Register() {
         if (response.ok) {
           const newUser = await response.json();
           console.log("User created:", newUser);
-          window.currentUser = newUser.id;
+          localStorage.setItem("currentUser", JSON.stringify(newUser));
           navigate("/");
         } else {
           console.error("Failed to log in");
@@ -60,12 +60,12 @@ function Register() {
         );
 
         if (user) {
-          window.currentUser = user.id;
+          localStorage.setItem("currentUser", JSON.stringify(user));
           console.log("User logged in: ", user.id);
           navigate("/");
         } else {
           console.error("Invalid username or password");
-          window.currentUser = -1;
+          localStorage.setItem("currentUser", JSON.stringify(null));
           navigate("/register");
           if (location.pathname === "/register") {
             navigate(location.pathname, { replace: true });
@@ -78,9 +78,9 @@ function Register() {
   };
 
   useEffect(() => {
-    if (window.currentUser === -1) {
+    if (JSON.parse(localStorage.getItem("currentUser")) == null) {
       return () => {
-        window.currentUser = undefined;
+        localStorage.setItem("currentUser", JSON.stringify(null));
       };
     }
   }, []);
@@ -90,7 +90,7 @@ function Register() {
       <div className="under-navbar"></div>
       <div className="registration-page">
         <div className="form-content z-index-increase">
-          {window.currentUser === -1 && (
+          {JSON.parse(localStorage.getItem("currentUser")) == null && (
             <p className="warning-text">Login failed, please try again!</p>
           )}
           <form onSubmit={handleSubmit}>

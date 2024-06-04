@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./Menu.css";
+import { useLocation } from "react-router-dom";
 import { Link as LinkScroll, Element } from "react-scroll";
+import MenuItem from "../components/MenuItem";
 
 function Menu() {
   const [menuSearchInputValue, setMenuSearchInputValue] = useState("");
@@ -12,9 +14,47 @@ function Menu() {
     desserts: [],
   });
 
+  const location = useLocation();
+
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("currentUser"))
+      ? JSON.parse(localStorage.getItem("currentUser"))
+      : null
+  );
+
+  useEffect(() => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (currentUser !== null) {
+      // setUser(currentUser);
+
+      fetch(`http://localhost:3001/users/${currentUser.id}`)
+        .then((response) => response.json())
+        .then((user) => {
+          console.log("On load, " + user.favoriteItems);
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          setUser(user);
+          setMenuItems((prevMenuItems) => ({
+            ...prevMenuItems,
+            favorites: user.favoriteItems,
+          }));
+        })
+        .catch((error) => {
+          console.error("Error fetching user: ", error);
+        });
+    } else {
+      setUser(null);
+      const savedFavorites = JSON.parse(localStorage.getItem("favorites"));
+      if (savedFavorites) {
+        setMenuItems((prevMenuItems) => ({
+          ...prevMenuItems,
+          favorites: savedFavorites,
+        }));
+      }
+    }
+  }, []);
+
   useEffect(() => {
     const searchText = menuSearchInputValue.toLowerCase();
-
     fetch("http://localhost:3001/menu")
       .then((response) => response.json())
       .then((data) => {
@@ -49,13 +89,37 @@ function Menu() {
             ...filteredDrinks,
             ...filteredDesserts,
           ].filter((item) => {
-            return (
-              item.userFavorited.includes(window.currentUser) &&
-              window.currentUser
-            );
+            if (user == null) {
+              var temp = JSON.parse(localStorage.getItem("favorites"));
+              for (const favoriteItem of temp) {
+                if (
+                  favoriteItem.id == item.id &&
+                  favoriteItem.category == item.category
+                ) {
+                  return true;
+                }
+              }
+              return false;
+            } else {
+              const currentUser = user;
+              console.log(localStorage.getItem("currentUser"));
+              console.log(user);
+              console.log(currentUser);
+              console.log(currentUser.favoriteItems);
+              for (const favoriteItem of currentUser.favoriteItems) {
+                if (
+                  favoriteItem.id == item.id &&
+                  favoriteItem.category == item.category
+                ) {
+                  return true;
+                }
+              }
+              return false;
+              // var temp = currentUser.favoriteItems;
+              // console.log(temp.includes(item));
+              // return temp.includes(item);
+            }
           });
-          console.log(filteredFavorites);
-
           setMenuItems({
             favorites: filteredFavorites,
             burgers: filteredBurgers,
@@ -79,6 +143,69 @@ function Menu() {
   const handleSearchInputChange = (event) => {
     setMenuSearchInputValue(event.target.value);
   };
+
+  function addToFavorites(itemClicked) {
+    if (user) {
+      const isFavorite = user.favoriteItems.includes(itemClicked);
+      const newFavorites = isFavorite
+        ? user.favoriteItems.filter((item) => item !== itemClicked)
+        : [...user.favoriteItems, itemClicked];
+
+      user.favoriteItems = newFavorites;
+      fetch(`http://localhost:3001/users/${user.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to update favorites in the database");
+          }
+          setMenuItems((prevState) => ({
+            ...prevState,
+            favorites: newFavorites,
+          }));
+        })
+        .catch((error) => {
+          console.error("Error updating favorites in the database:", error);
+        });
+    } else {
+      const favoriteCookies = JSON.parse(localStorage.getItem("favorites"));
+      console.log(favoriteCookies);
+      const isFavorite = () => {
+        for (const favoriteItem of favoriteCookies) {
+          if (
+            favoriteItem.id == itemClicked.id &&
+            favoriteItem.category == itemClicked.category
+          ) {
+            return true;
+          }
+        }
+        return false;
+      };
+
+      console.log(isFavorite());
+      const newFavorites = isFavorite()
+        ? favoriteCookies.filter(
+            (item) =>
+              !(
+                item.id == itemClicked.id &&
+                item.category == itemClicked.category
+              )
+          )
+        : [...favoriteCookies, itemClicked];
+
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+      // Update local state
+      setMenuItems((prevState) => ({
+        ...prevState,
+        favorites: newFavorites,
+      }));
+    }
+  }
+
   return (
     <>
       <div className="under-navbar"></div>
@@ -145,39 +272,24 @@ function Menu() {
             <div className="menu-favorites">
               <h1>Favorites</h1>
               <div className="category-box">
-                {menuItems.favorites.length == 0 ? (
+                {menuItems.favorites !== undefined &&
+                menuItems.favorites.length > 0 ? (
+                  menuItems.favorites.map((favorite, index) => (
+                    <MenuItem
+                      key={index}
+                      item={favorite}
+                      index={index}
+                      menuItems={menuItems}
+                      addToFavorites={addToFavorites}
+                      getRandomAngle={getRandomAngle}
+                    />
+                  ))
+                ) : (
                   <p className="favorite-info">
                     It doesn't look like you have any favorite items yet <br />
                     Add the most tasty items on the menu below by clicking the
                     star!
                   </p>
-                ) : (
-                  menuItems.favorites.map((favorite, index) => (
-                    <div key={index} className="menu-item">
-                      <div className="item-info">
-                        <h1>{favorite.title}</h1>
-                        <h2>{favorite.price} $</h2>
-                        <p>{favorite.description}</p>
-                        <button className="btn btn-success btn-add-order">
-                          Add to order
-                        </button>
-                      </div>
-                      <div className="item-image">
-                        <img
-                          src={favorite.image}
-                          alt={`Favorite: ${index}`}
-                          style={{
-                            transform: `rotate(${getRandomAngle()}deg)`,
-                          }}
-                        />
-                        <div className="image-button">
-                          <button className="btn btn-success">
-                            Add to order
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))
                 )}
               </div>
             </div>
@@ -185,28 +297,14 @@ function Menu() {
               <h1>Burgers</h1>
               <div className="category-box">
                 {menuItems.burgers.map((burger, index) => (
-                  <div key={index} className="menu-item">
-                    <div className="item-info">
-                      <h1>{burger.title}</h1>
-                      <h2>{burger.price} $ </h2>
-                      <p>{burger.description}</p>
-                      <button className="btn btn-success btn-add-order">
-                        Add to order
-                      </button>
-                    </div>
-                    <div className="item-image">
-                      <img
-                        src={burger.image}
-                        alt={`Burger: ${index}`}
-                        style={{ transform: `rotate(${getRandomAngle()}deg)` }}
-                      />
-                      <div className="image-button">
-                        <button className="btn btn-success">
-                          Add to order
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  <MenuItem
+                    key={index}
+                    item={burger}
+                    index={index}
+                    menuItems={menuItems}
+                    addToFavorites={addToFavorites}
+                    getRandomAngle={getRandomAngle}
+                  />
                 ))}
               </div>
             </Element>
@@ -214,28 +312,14 @@ function Menu() {
               <h1>Sides</h1>
               <div className="category-box">
                 {menuItems.sides.map((side, index) => (
-                  <div key={index} className="menu-item">
-                    <div className="item-info">
-                      <h1>{side.title}</h1>
-                      <h2>{side.price} $ </h2>
-                      <p>{side.description}</p>
-                      <button className="btn btn-success btn-add-order">
-                        Add to order
-                      </button>
-                    </div>
-                    <div className="item-image">
-                      <img
-                        src={side.image}
-                        alt={`Side: ${index}`}
-                        style={{ transform: `rotate(${getRandomAngle()}deg)` }}
-                      />
-                      <div className="image-button">
-                        <button className="btn btn-success">
-                          Add to order
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  <MenuItem
+                    key={index}
+                    item={side}
+                    index={index}
+                    menuItems={menuItems}
+                    addToFavorites={addToFavorites}
+                    getRandomAngle={getRandomAngle}
+                  />
                 ))}
               </div>
             </Element>
@@ -243,28 +327,14 @@ function Menu() {
               <h1>Drinks</h1>
               <div className="category-box">
                 {menuItems.drinks.map((drink, index) => (
-                  <div key={index} className="menu-item">
-                    <div className="item-info">
-                      <h1>{drink.title}</h1>
-                      <h2>{drink.price} $ </h2>
-                      <p>{drink.description}</p>
-                      <button className="btn btn-success btn-add-order">
-                        Add to order
-                      </button>
-                    </div>
-                    <div className="item-image">
-                      <img
-                        src={drink.image}
-                        alt={`drink: ${index}`}
-                        style={{ transform: `rotate(${getRandomAngle()}deg)` }}
-                      />
-                      <div className="image-button">
-                        <button className="btn btn-success">
-                          Add to order
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  <MenuItem
+                    key={index}
+                    item={drink}
+                    index={index}
+                    menuItems={menuItems}
+                    addToFavorites={addToFavorites}
+                    getRandomAngle={getRandomAngle}
+                  />
                 ))}
               </div>
             </Element>
@@ -272,28 +342,14 @@ function Menu() {
               <h1>Desserts</h1>
               <div className="category-box">
                 {menuItems.desserts.map((dessert, index) => (
-                  <div key={index} className="menu-item">
-                    <div className="item-info">
-                      <h1>{dessert.title}</h1>
-                      <h2>{dessert.price} $ </h2>
-                      <p>{dessert.description}</p>
-                      <button className="btn btn-success btn-add-order">
-                        Add to order
-                      </button>
-                    </div>
-                    <div className="item-image">
-                      <img
-                        src={dessert.image}
-                        alt={`Dessert: ${index}`}
-                        style={{ transform: `rotate(${getRandomAngle()}deg)` }}
-                      />
-                      <div className="image-button">
-                        <button className="btn btn-success">
-                          Add to order
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  <MenuItem
+                    key={index}
+                    item={dessert}
+                    index={index}
+                    menuItems={menuItems}
+                    addToFavorites={addToFavorites}
+                    getRandomAngle={getRandomAngle}
+                  />
                 ))}
               </div>
             </Element>

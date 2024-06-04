@@ -7,7 +7,7 @@
   align-items: center;
   background-color: #515151;
   color: white;
-  z-index: 2;
+  z-index: 100;
 }
 
 .menu-container {
@@ -58,7 +58,7 @@
   border: 2px solid black;
   padding: 10px;
   border-radius: 4px;
-  z-index: 2;
+  z-index: 100 !important;
 }
 .dropdown-item {
   text-decoration: none;

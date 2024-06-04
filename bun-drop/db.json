@@ -7,8 +7,7 @@
         "price": 8.99,
         "description": "A classic beef burger with lettuce, tomato, and cheese.",
         "category": "burgers",
-        "image": "src/assets/img/burger-1.png",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/burger-1.png"
       },
       {
         "id": 2,
@@ -16,8 +15,7 @@
         "price": 9.99,
         "description": "A frightfully delicious crispy chicken fillet topped with crispy bacon, caramelized onions, melted cheddar cheese, and tangy pickles, all served on a toasted bun with a spicy mayo sauce.",
         "category": "burgers",
-        "image": "src/assets/img/burger-2.png",
-        "userFavorited": ["1", "6bd0"]
+        "image": "src/assets/img/burger-2.png"
       },
       {
         "id": 3,
@@ -25,8 +23,7 @@
         "price": 11.99,
         "description": "A mouthwatering burger featuring two juicy beef patties, fresh onions, tangy pickles, ripe tomatoes, crisp lettuce, and a nice clean sauce, all nestled in a toasted bun.",
         "category": "burgers",
-        "image": "src/assets/img/burger-3.png",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/burger-3.png"
       },
       {
         "id": 4,
@@ -34,8 +31,7 @@
         "price": 12.99,
         "description": "A towering burger with two juicy beef patties, each layered with melted cheese, crispy bacon, roasted onions, fresh chili, and a flavorful dressing sauce, all served on a toasted bun.",
         "category": "burgers",
-        "image": "src/assets/img/burger-4.png",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/burger-4.png"
       },
       {
         "id": 5,
@@ -43,8 +39,7 @@
         "price": 13.49,
         "description": "A delectable burger featuring two large beef patties, layered with melted cheddar and Swiss cheese, all served on a toasted bun.",
         "category": "burgers",
-        "image": "src/assets/img/burger-5.png",
-        "userFavorited": ["1", "6bd0"]
+        "image": "src/assets/img/burger-5.png"
       },
       {
         "id": 6,
@@ -52,8 +47,7 @@
         "price": 10.99,
         "description": "A flavorful burger with a juicy beef patty, melted cheese, crisp Batavia lettuce, spicy jalapenos, red onions, and a tangy dressing, all served on a toasted bun.",
         "category": "burgers",
-        "image": "src/assets/img/burger-6.png",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/burger-6.png"
       },
       {
         "id": 7,
@@ -61,8 +55,7 @@
         "price": 11.49,
         "description": "A juicy large beef patty topped with melted cheese, savory grilled onions, and tangy pickled onions, all served on a toasted bun.",
         "category": "burgers",
-        "image": "src/assets/img/burger-7.png",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/burger-7.png"
       },
       {
         "id": 8,
@@ -70,8 +63,7 @@
         "price": 12.49,
         "description": "A delicious burger featuring a juicy beef patty topped with smoky BBQ sauce, melted cheddar and Emmental cheese, crispy bacon, and tangy pickles, all served on a toasted sesame bun.",
         "category": "burgers",
-        "image": "src/assets/img/burger-8.png",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/burger-8.png"
       },
       {
         "id": 9,
@@ -79,8 +71,7 @@
         "price": 14.99,
         "description": "A massive burger featuring three juicy beef patties, melted cheese, spicy chili, crisp Batavia lettuce, and crispy bacon, all served on a toasted bun.",
         "category": "burgers",
-        "image": "src/assets/img/burger-9.png",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/burger-9.png"
       },
       {
         "id": 10,
@@ -88,8 +79,7 @@
         "price": 8.99,
         "description": "Crispy breaded chicken fillet served with lettuce, tomato, and mayo.",
         "category": "burgers",
-        "image": "src/assets/img/crispy-chicken-burger.jpg",
-        "userFavorited": ["1", "6bd0"]
+        "image": "src/assets/img/crispy-chicken-burger.jpg"
       },
       {
         "id": 11,
@@ -97,8 +87,7 @@
         "price": 9.49,
         "description": "Juicy beef patty topped with crispy bacon, sliced avocado, lettuce, tomato, and ranch dressing.",
         "category": "burgers",
-        "image": "src/assets/img/avocado-bacon-burger.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/avocado-bacon-burger.jpg"
       }
     ],
     "sides": [
@@ -108,8 +97,7 @@
         "price": 4.99,
         "description": "Crispy golden onion rings served with your choice of dipping sauce.",
         "category": "sides",
-        "image": "src/assets/img/onionrings.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/onionrings.jpg"
       },
       {
         "id": 2,
@@ -117,8 +105,7 @@
         "price": 5.49,
         "description": "Delicious sweet potato fries lightly seasoned and served with a side of aioli.",
         "category": "sides",
-        "image": "src/assets/img/fries-2.png",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/fries-2.png"
       },
       {
         "id": 3,
@@ -126,8 +113,7 @@
         "price": 5.99,
         "description": "Crispy fries tossed in garlic butter and grated Parmesan cheese, served with ranch dipping sauce.",
         "category": "sides",
-        "image": "src/assets/img/Garlic-Parmesan-Fries.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/Garlic-Parmesan-Fries.jpg"
       },
       {
         "id": 4,
@@ -135,8 +121,7 @@
         "price": 7.99,
         "description": "Tortilla chips topped with melted cheese, jalapenos, black beans, salsa, sour cream, and guacamole.",
         "category": "sides",
-        "image": "src/assets/img/nachos.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/nachos.jpg"
       },
       {
         "id": 5,
@@ -144,8 +129,7 @@
         "price": 6.49,
         "description": "Crisp romaine lettuce tossed in Caesar dressing with croutons and grated Parmesan cheese.",
         "category": "sides",
-        "image": "src/assets/img/caesar-salad.jpg",
-        "userFavorited": ["1", "6bd0"]
+        "image": "src/assets/img/caesar-salad.jpg"
       },
       {
         "id": 6,
@@ -153,8 +137,7 @@
         "price": 3.99,
         "description": "The most classic crispy fries, the favorite side to every burger",
         "category": "sides",
-        "image": "src/assets/img/fries-1.png",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/fries-1.png"
       }
     ],
     "drinks": [
@@ -164,8 +147,7 @@
         "price": 2.49,
         "description": "Refreshing iced tea available in lemon or peach flavor.",
         "category": "drinks",
-        "image": "src/assets/img/iced-tea.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/iced-tea.jpg"
       },
       {
         "id": 2,
@@ -173,8 +155,7 @@
         "price": 2.99,
         "description": "Classic lemonade made with freshly squeezed lemons and a hint of sweetness.",
         "category": "drinks",
-        "image": "src/assets/img/Lemonade.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/Lemonade.jpg"
       },
       {
         "id": 3,
@@ -182,8 +163,7 @@
         "price": 4.49,
         "description": "A tropical blend of ripe mangoes, yogurt, and a touch of honey.",
         "category": "drinks",
-        "image": "src/assets/img/mango-smoothie.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/mango-smoothie.jpg"
       },
       {
         "id": 4,
@@ -191,8 +171,7 @@
         "price": 3.99,
         "description": "Classic Soda excellent drink of different flavors, perfect for all items on the menu.",
         "category": "drinks",
-        "image": "src/assets/img/soda-all.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/soda-all.jpg"
       },
       {
         "id": 5,
@@ -200,8 +179,7 @@
         "price": 3.49,
         "description": "A refreshing blend of tart lemonade and sweet strawberries.",
         "category": "drinks",
-        "image": "src/assets/img/strawberry-lemonade.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/strawberry-lemonade.jpg"
       }
     ],
     "desserts": [
@@ -211,8 +189,7 @@
         "price": 6.99,
         "description": "Warm chocolate brownie topped with vanilla ice cream, chocolate syrup, whipped cream, and a cherry on top.",
         "category": "desserts",
-        "image": "src/assets/img/Chocolate-Brownie-Sundae.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/Chocolate-Brownie-Sundae.jpg"
       },
       {
         "id": 2,
@@ -220,8 +197,7 @@
         "price": 5.49,
         "description": "Creamy cheesecake with a graham cracker crust, served plain or with your choice of fruit topping.",
         "category": "desserts",
-        "image": "src/assets/img/cheesecake.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/cheesecake.jpg"
       },
       {
         "id": 3,
@@ -229,8 +205,7 @@
         "price": 4.99,
         "description": "Classic American apple pie served warm with a scoop of vanilla ice cream.",
         "category": "desserts",
-        "image": "src/assets/img/Apple-Pie.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/Apple-Pie.jpg"
       },
       {
         "id": 4,
@@ -238,8 +213,7 @@
         "price": 7.49,
         "description": "Decadent chocolate cake with a molten chocolate center, served with a scoop of vanilla ice cream.",
         "category": "desserts",
-        "image": "src/assets/img/Lava-Cake.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/Lava-Cake.jpg"
       },
       {
         "id": 5,
@@ -247,8 +221,7 @@
         "price": 5.99,
         "description": "Layers of fluffy sponge cake with fresh strawberries and whipped cream.",
         "category": "desserts",
-        "image": "src/assets/img/Strawberry-Shortcake.jpg",
-        "userFavorited": ["1"]
+        "image": "src/assets/img/Strawberry-Shortcake.jpg"
       }
     ]
   },
@@ -256,12 +229,62 @@
     {
       "id": "1",
       "username": "user",
-      "password": "password"
+      "password": "password",
+      "favoriteItems": []
     },
     {
-      "id": "6bd0",
+      "id": "3441",
       "username": "Test123",
-      "password": "Test123"
+      "password": "Test123",
+      "favoriteItems": [
+        {
+          "id": 1,
+          "title": "Classic Burger",
+          "price": 8.99,
+          "description": "A classic beef burger with lettuce, tomato, and cheese.",
+          "category": "burgers",
+          "image": "src/assets/img/burger-1.png"
+        },
+        {
+          "id": 3,
+          "title": "Apple Pie",
+          "price": 4.99,
+          "description": "Classic American apple pie served warm with a scoop of vanilla ice cream.",
+          "category": "desserts",
+          "image": "src/assets/img/Apple-Pie.jpg"
+        }
+      ]
+    },
+    {
+      "id": "69d5",
+      "username": "Test",
+      "password": "Test",
+      "favoriteItems": [
+        {
+          "id": 1,
+          "title": "Classic Burger",
+          "price": 8.99,
+          "description": "A classic beef burger with lettuce, tomato, and cheese.",
+          "category": "burgers",
+          "image": "src/assets/img/burger-1.png"
+        },
+        {
+          "id": 2,
+          "title": "Scary Chicken Burger",
+          "price": 9.99,
+          "description": "A frightfully delicious crispy chicken fillet topped with crispy bacon, caramelized onions, melted cheddar cheese, and tangy pickles, all served on a toasted bun with a spicy mayo sauce.",
+          "category": "burgers",
+          "image": "src/assets/img/burger-2.png"
+        },
+        {
+          "id": 4,
+          "title": "Ultimate Bacon Double Cheese Burger",
+          "price": 12.99,
+          "description": "A towering burger with two juicy beef patties, each layered with melted cheese, crispy bacon, roasted onions, fresh chili, and a flavorful dressing sauce, all served on a toasted bun.",
+          "category": "burgers",
+          "image": "src/assets/img/burger-4.png"
+        }
+      ]
     }
   ]
 }

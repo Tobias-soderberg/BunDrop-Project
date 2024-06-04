@@ -30,7 +30,8 @@ function Navbar() {
   }
 
   function handleLogout() {
-    window.currentUser = undefined;
+    localStorage.setItem("currentUser", JSON.stringify(null));
+    window.location.reload();
   }
 
   //Add eventlistener on load, removes when component is no longer there... Maybe I will change this later?
@@ -69,18 +70,14 @@ function Navbar() {
                     <i className="fa-solid fa-cart-shopping"></i> Shopping Cart
                   </p>
                 </Link>
-                {!window.currentUser ? (
+                {!JSON.parse(localStorage.getItem("currentUser")) ? (
                   <Link to="register" className="dropdown-item">
                     <p>
                       <i className="fa-solid fa-user"></i> Register account
                     </p>
                   </Link>
                 ) : (
-                  <Link
-                    to="register"
-                    className="dropdown-item"
-                    onClick={handleLogout}
-                  >
+                  <Link to="/" className="dropdown-item" onClick={handleLogout}>
                     <p>
                       <i className="fa-solid fa-user"></i> Logout account
                     </p>

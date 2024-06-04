@@ -26,7 +26,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  z-index: 10;
+  z-index: 2;
 }
 .menu-navbar-categories {
   width: 70%;
@@ -126,4 +126,17 @@ a.active-category {
   color: #dddddd;
   border-bottom: 2px solid #dddddd;
   font-weight: bold;
+}
+
+.fav-star {
+  position: relative;
+  z-index: 100;
+  top: -50%;
+  right: -100%;
+  color: gold;
+  font-size: xx-large;
+}
+
+.fav-star:hover {
+  cursor: pointer;
 }

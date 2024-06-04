@@ -20,14 +20,13 @@ const Login = ({ isOpen, onClose }) => {
       );
 
       if (user) {
-        //Global variable
-        window.currentUser = user.id;
+        localStorage.setItem("currentUser", JSON.stringify(user));
         console.log("User logged in: ", user.id);
         handleClose();
         handleRefresh();
       } else {
         console.error("Invalid username or password");
-        window.currentUser = -1;
+        localStorage.setItem("currentUser", JSON.stringify(null));
         navigate("/register");
         if (location.pathname === "/register") {
           handleRefresh();

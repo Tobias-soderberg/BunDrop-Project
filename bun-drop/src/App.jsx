@@ -12,7 +12,10 @@ import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0);
+  //localStorage.setItem("favorites", []);
+  if (!localStorage.getItem("favorites")) {
+    localStorage.setItem("favorites", JSON.stringify([]));
+  }
 
   return (
     <>

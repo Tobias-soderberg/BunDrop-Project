@@ -284,7 +284,8 @@
           "category": "burgers",
           "image": "src/assets/img/burger-4.png"
         }
-      ]
+      ],
+      "cart": []
     }
   ]
 }

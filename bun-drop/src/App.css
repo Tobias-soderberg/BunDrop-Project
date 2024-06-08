@@ -10,7 +10,7 @@ body {
 }
 
 .under-navbar {
-  height: 10vh;
+  height: 15vh;
   background-color: #2f303a !important;
 }
 
@@ -66,4 +66,12 @@ body {
 
 .warning-text {
   color: crimson;
+}
+.not-found-text {
+  margin-top: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-direction: column;
 }

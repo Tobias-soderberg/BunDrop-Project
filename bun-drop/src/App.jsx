@@ -12,9 +12,12 @@ import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 
 function App() {
-  //localStorage.setItem("favorites", []);
+  // Create cookies for users not logged in to use
   if (!localStorage.getItem("favorites")) {
     localStorage.setItem("favorites", JSON.stringify([]));
+  }
+  if (!localStorage.getItem("cart")) {
+    localStorage.setItem("cart", JSON.stringify({}));
   }
 
   return (

@@ -30,7 +30,7 @@ function Register() {
         alert("Passwords do not match!");
         return;
       }
-      const user = { username, password, favoriteItems: [] };
+      const user = { username, password, favoriteItems: [], cart: [] };
 
       try {
         const response = await fetch("http://localhost:3001/users", {

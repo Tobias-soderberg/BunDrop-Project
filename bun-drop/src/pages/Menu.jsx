@@ -25,12 +25,9 @@ function Menu() {
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     if (currentUser !== null) {
-      // setUser(currentUser);
-
       fetch(`http://localhost:3001/users/${currentUser.id}`)
         .then((response) => response.json())
         .then((user) => {
-          console.log("On load, " + user.favoriteItems);
           localStorage.setItem("currentUser", JSON.stringify(user));
           setUser(user);
           setMenuItems((prevMenuItems) => ({
@@ -115,9 +112,6 @@ function Menu() {
                 }
               }
               return false;
-              // var temp = currentUser.favoriteItems;
-              // console.log(temp.includes(item));
-              // return temp.includes(item);
             }
           });
           setMenuItems({

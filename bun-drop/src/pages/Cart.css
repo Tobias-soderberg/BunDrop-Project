@@ -1,0 +1,14 @@
+.cart-page {
+  background-color: #2f303a;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+}
+.cart-content {
+  display: flex;
+  flex-direction: column;
+  width: 150vh;
+}

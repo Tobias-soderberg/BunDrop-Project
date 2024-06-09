@@ -16,7 +16,7 @@ const MenuItem = ({
   );
 
   const handleAddToCart = (item) => {
-    addItemToCart(item);
+    addItemToCart(item, user);
   };
 
   return (

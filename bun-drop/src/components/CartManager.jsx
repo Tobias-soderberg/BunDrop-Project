@@ -1,17 +1,17 @@
-export function removeItemFromCart(item, user) {
+export async function removeItemFromCart(item, user) {
   if (user) {
-    fetch(`http://localhost:3001/users/${user.id}`)
+    await fetch(`http://localhost:3001/users/${user.id}`)
       .then((response) => response.json())
-      .then((userData) => {
+      .then(async (userData) => {
         const userCart = userData.cart || {};
-        if (userCart[item.id]) {
-          if (userCart[item.id].quantity > 1) {
-            userCart[item.id].quantity -= 1;
+        if (userCart[item.category + item.id]) {
+          if (userCart[item.category + item.id].quantity > 1) {
+            userCart[item.category + item.id].quantity -= 1;
           } else {
-            delete userCart[item.id];
+            delete userCart[item.category + item.id];
           }
 
-          fetch(`http://localhost:3001/users/${user.id}`, {
+          await fetch(`http://localhost:3001/users/${user.id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ ...userData, cart: userCart }),
@@ -38,18 +38,20 @@ export function removeItemFromCart(item, user) {
   }
 }
 
-export function addItemToCart(item, user) {
+export async function addItemToCart(item, user) {
   if (user) {
-    fetch(`http://localhost:3001/users/${user.id}`)
+    await fetch(`http://localhost:3001/users/${user.id}`)
       .then((response) => response.json())
-      .then((userData) => {
-        const userCart = userData.cart || {};
-        if (userCart[item.id]) {
-          userCart[item.id].quantity += 1;
+      .then(async (userData) => {
+        console.log("TEST");
+        const userCart = userData.cart;
+        if (userCart[item.category + item.id]) {
+          userCart[item.category + item.id].quantity += 1;
         } else {
-          userCart[item.id] = { ...item, quantity: 1 };
+          userCart[item.category + item.id] = { ...item, quantity: 1 };
         }
-        fetch(`http://localhost:3001/users/${user.id}`, {
+        console.log("TEST");
+        await fetch(`http://localhost:3001/users/${user.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...userData, cart: userCart }),
@@ -67,5 +69,24 @@ export function addItemToCart(item, user) {
       storedCart[item.category + item.id] = { ...item, quantity: 1 };
     }
     localStorage.setItem("cart", JSON.stringify(storedCart));
+  }
+}
+
+export function clearCart(user) {
+  if (user) {
+    fetch(`http://localhost:3001/users/${user.id}`)
+      .then((response) => response.json())
+      .then((userData) => {
+        fetch(`http://localhost:3001/users/${user.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...userData, cart: {} }),
+        }).catch((error) => console.error("Error clearing user cart: ", error));
+      })
+      .catch((error) => {
+        console.error("Error fetching user: ", error);
+      });
+  } else {
+    localStorage.setItem("cart", JSON.stringify({}));
   }
 }

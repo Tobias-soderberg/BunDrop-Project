@@ -2,14 +2,23 @@ import React, { useEffect, useState } from "react";
 import "./Cart.css";
 import { addItemToCart, removeItemFromCart } from "../components/CartManager";
 
+import { useNavigate } from "react-router-dom";
+
 function Cart() {
   const storedUser = JSON.parse(localStorage.getItem("currentUser"));
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [cart, setCart] = useState([]);
+  const [totalCost, setTotalCost] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     updateCart();
   }, [user]);
+
+  useEffect(() => {
+    setTotalCost(calculateTotalPrice());
+  }, [cart]);
 
   function updateCart() {
     if (user) {
@@ -28,36 +37,31 @@ function Cart() {
   }
 
   function calculateTotalPrice() {
+    var totalCost = 0;
     if (user) {
-      fetch(`http://localhost:3001/users/${user.id}`)
-        .then((response) => response.json())
-        .then((userData) => {
-          var totalCost = 0;
-          for (var item in Object.values(userData.cart)) {
-            totalCost += item.quantity * item.price;
-          }
-          return totalCost.toFixed(2);
-        })
-        .catch((error) => {
-          console.error("Error fetching user: ", error);
-        });
+      for (var item in cart) {
+        totalCost += cart[item].quantity * cart[item].price;
+      }
     } else {
       const storedCart = JSON.parse(localStorage.getItem("cart"));
-      var totalCost = 0;
       for (var item in storedCart) {
         totalCost += storedCart[item].quantity * storedCart[item].price;
       }
-      return totalCost.toFixed(2);
     }
+    return totalCost.toFixed(2);
   }
-  const handleAddToCart = (item) => {
-    addItemToCart(item, user);
+  const handleAddToCart = async (item) => {
+    await addItemToCart(item, user);
     updateCart();
   };
-  const handleRemoveFromCart = (item) => {
-    removeItemFromCart(item, user);
+  const handleRemoveFromCart = async (item) => {
+    await removeItemFromCart(item, user);
     updateCart();
   };
+
+  function navigateToCheckout() {
+    navigate(`/checkout/${calculateTotalPrice()}`);
+  }
 
   return (
     <>
@@ -99,11 +103,19 @@ function Cart() {
                   <strong>Total Price:</strong>
                 </td>
                 <td>
-                  <strong>{calculateTotalPrice()} $</strong>
+                  <strong>{totalCost} $</strong>
                 </td>
               </tr>
             </tbody>
           </table>
+          <button
+            className="btn btn-primary mt-3"
+            onClick={() => {
+              navigateToCheckout();
+            }}
+          >
+            Proceed to checkout
+          </button>
         </div>
       </div>
     </>

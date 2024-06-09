@@ -22,11 +22,11 @@
 .cart-items th,
 .cart-items td {
   padding: 8px;
-  text-align: left;
-  border: 2px solid #b8884f;
+  text-align: center;
+  border: 2px solid #f2f2f2;
 }
 .cart-items th {
-  background-color: #b8884f;
+  background-color: #f2f2f2;
 }
 
 .table-header {
@@ -38,18 +38,18 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 60%;
+  width: 100%;
 }
 .quantity-box button {
   margin: 0 4px;
+  width: 20%;
 }
 .quantity-box > p {
   margin: 0;
 }
-.cart-items tfoot td {
-  text-align: right;
+.cart-items > td {
+  text-align: center;
 }
-.invisible-box {
-  border: none;
-  background-color: transparent;
+p {
+  margin-top: 1rem;
 }

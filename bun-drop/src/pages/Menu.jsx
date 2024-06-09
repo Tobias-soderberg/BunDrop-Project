@@ -99,10 +99,6 @@ function Menu() {
               return false;
             } else {
               const currentUser = user;
-              console.log(localStorage.getItem("currentUser"));
-              console.log(user);
-              console.log(currentUser);
-              console.log(currentUser.favoriteItems);
               for (const favoriteItem of currentUser.favoriteItems) {
                 if (
                   favoriteItem.id == item.id &&
@@ -167,7 +163,6 @@ function Menu() {
         });
     } else {
       const favoriteCookies = JSON.parse(localStorage.getItem("favorites"));
-      console.log(favoriteCookies);
       const isFavorite = () => {
         for (const favoriteItem of favoriteCookies) {
           if (
@@ -180,7 +175,6 @@ function Menu() {
         return false;
       };
 
-      console.log(isFavorite());
       const newFavorites = isFavorite()
         ? favoriteCookies.filter(
             (item) =>

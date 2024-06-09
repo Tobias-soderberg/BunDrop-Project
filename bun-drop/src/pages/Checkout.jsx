@@ -107,6 +107,12 @@ function Checkout() {
       navigate("/");
     }
   };
+  const calculateTotalPrice = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+  const getRandomDeliveryTime = () => {
+    return Math.floor(Math.random() * 41) + 20;
+  };
 
   return (
     <>
@@ -395,6 +401,22 @@ function Checkout() {
         <div className="message">
           <div className="message-content">
             <p>{messageText}</p>
+            {messageType === "success" && (
+              <>
+                <h3>Order Summary:</h3>
+                <ul>
+                  {cart.map((item, index) => (
+                    <li key={index}>
+                      {item.title} - Quantity: {item.quantity}
+                    </li>
+                  ))}
+                </ul>
+                <p>Total Price: ${calculateTotalPrice()}</p>
+                <p>
+                  Estimated Delivery Time: {getRandomDeliveryTime()} minutes
+                </p>
+              </>
+            )}
             <button onClick={handleConfirm}>Confirm</button>
           </div>
         </div>

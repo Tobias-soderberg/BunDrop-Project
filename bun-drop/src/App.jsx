@@ -35,7 +35,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/register" element={<Register />} />
           <Route path="/checkout/:price" element={<Checkout />} />
-          <Route path="/confirm" element={<ConfirmPayment />} />
+          <Route path="/confirm/:price" element={<ConfirmPayment />} />
           <Route path="/home" element={<Home />} />
 
           <Route path="*" element={<NotFound />} />

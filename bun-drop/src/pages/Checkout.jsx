@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Navigate, useNavigate } from "react-router-dom";
 import "./Checkout.css";
-import { clearCart } from "../components/CartManager";
 
 function Checkout() {
   const storedUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -31,25 +30,22 @@ function Checkout() {
   const [cardNumberError, setCardNumberError] = useState(false);
   const [cvvError, setCvvError] = useState(false);
 
-  const [showMessage, setShowMessage] = useState(false);
-  const [messageText, setMessageText] = useState("");
-  const [messageType, setMessageType] = useState("error");
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    setUser(() => {
-      if (user) {
-        fetch(`http://localhost:3001/users/${user.id}`)
-          .then((response) => response.json())
-          .then((userData) => {
-            setCart(Object.values(userData.cart || {}));
-          })
-          .catch((error) => {
-            console.error("Error fetching user: ", error);
-          });
-      }
-    });
+    if (user) {
+      fetch(`http://localhost:3001/users/${user.id}`)
+        .then((response) => response.json())
+        .then((userData) => {
+          const cartItems = Object.values(userData.cart || {});
+          setCart(cartItems);
+        })
+        .catch((error) => {
+          console.error("Error fetching user: ", error);
+        });
+    } else {
+      setCart(JSON.parse(localStorage.getItem("cart")) || {});
+    }
   }, [user]);
 
   const handleSubmit = async (e) => {
@@ -88,30 +84,10 @@ function Checkout() {
         throw new Error("Failed to save order");
       }
 
-      clearCart(JSON.parse(localStorage.getItem("currentUser")));
-
-      setMessageText("Order placed successfully!");
-      setMessageType("success");
-      setShowMessage(true);
+      navigate("/confirm/" + price);
     } catch (error) {
-      setMessageText(error + ". Please try again...");
-      setMessageType("error");
-      setShowMessage(true);
+      navigate("/confirm/" + price);
     }
-  };
-
-  const handleConfirm = () => {
-    setShowMessage(false);
-
-    if (messageType == "success") {
-      navigate("/");
-    }
-  };
-  const calculateTotalPrice = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
-  };
-  const getRandomDeliveryTime = () => {
-    return Math.floor(Math.random() * 41) + 20;
   };
 
   return (
@@ -397,30 +373,6 @@ function Checkout() {
           </form>
         </div>
       </div>
-      {showMessage && (
-        <div className="message">
-          <div className="message-content">
-            <p>{messageText}</p>
-            {messageType === "success" && (
-              <>
-                <h3>Order Summary:</h3>
-                <ul>
-                  {cart.map((item, index) => (
-                    <li key={index}>
-                      {item.title} - Quantity: {item.quantity}
-                    </li>
-                  ))}
-                </ul>
-                <p>Total Price: ${calculateTotalPrice()}</p>
-                <p>
-                  Estimated Delivery Time: {getRandomDeliveryTime()} minutes
-                </p>
-              </>
-            )}
-            <button onClick={handleConfirm}>Confirm</button>
-          </div>
-        </div>
-      )}
     </>
   );
 }
